@@ -12,10 +12,159 @@ cards.forEach((item) => {
 
     // Agrega la clase 'card--active' a la tarjeta clicada
     item.classList.add('card--active');
+    
+    // Update hidden input value
+    updateCardSelection(cardGroup, item);
   });
 });
 
 let currentStep = 1;
+
+// Validation functions
+function validateStep(stepNumber) {
+  const stepElement = document.getElementById(`step-${stepNumber}`);
+  const requiredFields = stepElement.querySelectorAll('[required]');
+  const cardSelects = stepElement.querySelectorAll('.card-select');
+  let isValid = true;
+  let errors = [];
+
+  // Clear previous error states
+  stepElement.querySelectorAll('.input').forEach(input => {
+    input.classList.remove('error');
+  });
+
+  // Validate required inputs
+  requiredFields.forEach(field => {
+    if (field.type === 'text' || field.type === 'email' || field.type === 'date') {
+      if (!field.value.trim()) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" es requerido`);
+      } else if (field.hasAttribute('minlength') && field.value.trim().length < parseInt(field.getAttribute('minlength'))) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" debe tener al menos ${field.getAttribute('minlength')} caracteres`);
+      } else if (field.hasAttribute('maxlength') && field.value.trim().length > parseInt(field.getAttribute('maxlength'))) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" no debe exceder ${field.getAttribute('maxlength')} caracteres`);
+      } else if (field.hasAttribute('pattern') && !new RegExp(field.getAttribute('pattern')).test(field.value)) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El formato del campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" no es válido`);
+      }
+    } else if (field.tagName === 'SELECT') {
+      if (!field.value) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`Debe seleccionar una opción en "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}"`);
+      }
+    } else if (field.tagName === 'TEXTAREA') {
+      if (!field.value.trim()) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" es requerido`);
+      } else if (field.hasAttribute('minlength') && field.value.trim().length < parseInt(field.getAttribute('minlength'))) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" debe tener al menos ${field.getAttribute('minlength')} caracteres`);
+      } else if (field.hasAttribute('maxlength') && field.value.trim().length > parseInt(field.getAttribute('maxlength'))) {
+        isValid = false;
+        field.classList.add('error');
+        errors.push(`El campo "${field.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim()}" no debe exceder ${field.getAttribute('maxlength')} caracteres`);
+      }
+    }
+  });
+
+  // Validate radio button groups
+  const radioGroups = {};
+  stepElement.querySelectorAll('input[type="radio"][required]').forEach(radio => {
+    if (!radioGroups[radio.name]) {
+      radioGroups[radio.name] = [];
+    }
+    radioGroups[radio.name].push(radio);
+  });
+
+  Object.keys(radioGroups).forEach(groupName => {
+    const group = radioGroups[groupName];
+    const isChecked = group.some(radio => radio.checked);
+    if (!isChecked) {
+      isValid = false;
+      const label = group[0].closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim();
+      errors.push(`Debe seleccionar una opción en "${label}"`);
+    }
+  });
+
+  // Validate card selections
+  cardSelects.forEach(cardSelect => {
+    const activeCard = cardSelect.querySelector('.card--active');
+    const hiddenInput = cardSelect.closest('.form__group').querySelector('input[type="hidden"][required]');
+    
+    if (hiddenInput && !activeCard) {
+      isValid = false;
+      const label = cardSelect.closest('.form__group').querySelector('.group__label').textContent.replace('*', '').trim();
+      errors.push(`Debe seleccionar una opción en "${label}"`);
+    }
+  });
+
+  // Validate date ranges
+  const dateInputs = stepElement.querySelectorAll('input[type="date"]');
+  if (dateInputs.length === 2) {
+    const startDate = new Date(dateInputs[0].value);
+    const endDate = new Date(dateInputs[1].value);
+    
+    if (startDate >= endDate) {
+      isValid = false;
+      dateInputs[0].classList.add('error');
+      dateInputs[1].classList.add('error');
+      errors.push('La fecha de inicio debe ser anterior a la fecha de fin');
+    }
+  }
+
+  // Validate schedule table (step 17)
+  if (stepNumber === 17) {
+    const scheduleRows = stepElement.querySelectorAll('#schedule-tbody .activity-row');
+    if (scheduleRows.length === 0) {
+      isValid = false;
+      errors.push('Debe agregar al menos una actividad al cronograma');
+    } else {
+      scheduleRows.forEach((row, index) => {
+        const activityInput = row.querySelector('.schedule-input');
+        if (!activityInput.value.trim()) {
+          isValid = false;
+          activityInput.classList.add('error');
+          errors.push(`La actividad ${index + 1} debe tener un nombre`);
+        }
+      });
+    }
+  }
+
+  if (!isValid) {
+    showNotification('Por favor corrige los errores antes de continuar:\n' + errors.join('\n'), 'error');
+  }
+
+  return isValid;
+}
+
+// Email validation
+function validateEmail(email) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+// Phone validation
+function validatePhone(phone) {
+  const phonePattern = /^[\d\s\-\(\)\+]{10,}$/;
+  return phonePattern.test(phone);
+}
+
+// Update card selection to update hidden input
+function updateCardSelection(cardSelect, selectedCard) {
+  const hiddenInput = cardSelect.closest('.form__group').querySelector('input[type="hidden"]');
+  if (hiddenInput) {
+    hiddenInput.value = selectedCard.querySelector('.card__title').textContent;
+  }
+}
 
 function showStep(stepNumber) {
   document.querySelectorAll('.step-content').forEach(step => {
@@ -64,15 +213,40 @@ function updateStepIndicators(currentSection) {
 }
 
 function nextStep() {
+  // Validate current step before proceeding
+  if (!validateStep(currentStep)) {
+    return;
+  }
+
+  let nextStepNumber = currentStep + 1;
+  
+  // Skip step-4 if "Sin financiamiento" is selected in step-3
+  if (currentStep === 3) {
+    const sinFinanciamiento = document.querySelector('#sin-financiamiento');
+    if (sinFinanciamiento && sinFinanciamiento.checked) {
+      nextStepNumber = 5; // Skip step-4 and go directly to step-5
+    }
+  }
+  
   // Permitir navegación hasta el paso 17 (cronograma de actividades)
-  if (currentStep < 17) {
-    showStep(currentStep + 1);
+  if (nextStepNumber <= 17) {
+    showStep(nextStepNumber);
   }
 }
 
 function prevStep() {
-  if (currentStep > 1) {
-    showStep(currentStep - 1);
+  let prevStepNumber = currentStep - 1;
+  
+  // Skip step-4 when going back from step-5 if "Sin financiamiento" is selected
+  if (currentStep === 5) {
+    const sinFinanciamiento = document.querySelector('#sin-financiamiento');
+    if (sinFinanciamiento && sinFinanciamiento.checked) {
+      prevStepNumber = 3; // Skip step-4 and go directly to step-3
+    }
+  }
+  
+  if (prevStepNumber >= 1) {
+    showStep(prevStepNumber);
   }
 }
 
@@ -104,6 +278,17 @@ function createCollaboratorElement(data, type) {
  const collaboratorItem = document.createElement('div');
  collaboratorItem.className = 'collaborator-item';
  
+ // Para estudiantes, mostrar el tipo de formación académica
+ let roleText = `${data.grado} - ${data.actividad}`;
+ if (type === 'estudiante' && data.tipoFormacion) {
+  if (data.tipoFormacion.includes('-')) {
+    data.tipoFormacion = data.tipoFormacion.replace(/-/g, ' ');
+  }
+  data.tipoFormacion = data.tipoFormacion.charAt(0).toUpperCase() + data.tipoFormacion.slice(1);
+
+  roleText = `${data.grado} - ${data.actividad} (${data.tipoFormacion})`;
+ }
+ 
  collaboratorItem.innerHTML = `
   <div class="collaborator-avatar">
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +298,7 @@ function createCollaboratorElement(data, type) {
   </div>
   <div class="collaborator-info">
    <div class="collaborator-name">${data.nombre}</div>
-   <div class="collaborator-role">${data.grado} - ${data.actividad}</div>
+   <div class="collaborator-role">${roleText}</div>
   </div>
   <button type="button" class="btn-remove" onclick="removeCollaborator(this)">
    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -130,57 +315,126 @@ function removeCollaborator(button) {
  const collaboratorList = collaboratorItem.closest('.collaborator-list');
  const collaboratorName = collaboratorItem.querySelector('.collaborator-name').textContent;
  
+ // Determinar si es la sección de estudiantes o profesores
+ const step7 = document.getElementById('step-7');
+ const formGroups = step7.querySelectorAll('.form__group');
+ const professorSection = formGroups[0].querySelector('.collaborator-list');
+ const studentSection = formGroups[1].querySelector('.collaborator-list');
+ 
+ const isProfessorSection = collaboratorList === professorSection;
+ const isStudentSection = collaboratorList === studentSection;
+ 
  // Cuenta el número de colaboradores restantes
  const remainingCollaborators = collaboratorList.querySelectorAll('.collaborator-item').length;
  
- // Previene eliminar si solo queda un colaborador
- if (remainingCollaborators <= 1) {
-  showNotification('Debe mantener al menos un colaborador en cada sección', 'error');
+ // Para profesores, prevenir eliminar si solo queda uno
+ if (isProfessorSection && remainingCollaborators <= 1) {
+  showNotification('Debe mantener al menos un profesor en el proyecto', 'error');
   return;
  }
  
  if (confirm(`¿Estás seguro de que quieres eliminar a ${collaboratorName}?`)) {
   collaboratorItem.remove();
   showNotification(`${collaboratorName} ha sido eliminado exitosamente`, 'success');
+  
+  // Si es la sección de estudiantes y no quedan colaboradores, ocultar la sección
+  if (isStudentSection && remainingCollaborators === 1) {
+   studentSection.style.display = 'none';
+  }
  }
 }
 
 function validateForm(modalId) {
  const modal = document.getElementById(modalId);
  const inputs = modal.querySelectorAll('.input[required], .input');
+ const selects = modal.querySelectorAll('.select[required]');
  const activeCard = modal.querySelector('.card--active');
  
  let isValid = true;
  let errors = [];
  
+ // Clear previous error states
+ modal.querySelectorAll('.input, .select').forEach(field => {
+   field.classList.remove('error');
+ });
+ 
+ // Validate text inputs
  inputs.forEach(input => {
-  if (input.value.trim() === '') {
+  if (input.hasAttribute('required') && input.value.trim() === '') {
    isValid = false;
    errors.push(`El campo "${input.previousElementSibling.textContent}" es requerido`);
-   input.style.borderColor = '#EF4444';
-  } else {
-   input.style.borderColor = '';
+   input.classList.add('error');
+  } else if (input.value.trim() !== '') {
+   // Validate email if it's an email field
+   if (input.type === 'email' && !validateEmail(input.value)) {
+    isValid = false;
+    errors.push(`El formato del email no es válido`);
+    input.classList.add('error');
+   }
+   // Validate phone if it's a phone field
+   if (input.type === 'tel' && !validatePhone(input.value)) {
+    isValid = false;
+    errors.push(`El formato del teléfono no es válido`);
+    input.classList.add('error');
+   }
+   // Validate length constraints
+   if (input.hasAttribute('minlength') && input.value.trim().length < parseInt(input.getAttribute('minlength'))) {
+    isValid = false;
+    errors.push(`El campo "${input.previousElementSibling.textContent}" debe tener al menos ${input.getAttribute('minlength')} caracteres`);
+    input.classList.add('error');
+   }
+   if (input.hasAttribute('maxlength') && input.value.trim().length > parseInt(input.getAttribute('maxlength'))) {
+    isValid = false;
+    errors.push(`El campo "${input.previousElementSibling.textContent}" no debe exceder ${input.getAttribute('maxlength')} caracteres`);
+    input.classList.add('error');
+   }
   }
  });
  
+ // Validate select fields
+ selects.forEach(select => {
+  if (select.hasAttribute('required') && !select.value) {
+   isValid = false;
+   errors.push(`Debe seleccionar una opción en "${select.previousElementSibling.textContent}"`);
+   select.classList.add('error');
+  }
+ });
+ 
+ // Validate card selection
  if (!activeCard) {
   isValid = false;
   errors.push('Debe seleccionar un grado académico');
  }
  
  if (!isValid) {
-  alert('Por favor corrige los siguientes errores:\n' + errors.join('\n'));
+  showNotification('Por favor corrige los siguientes errores:\n' + errors.join('\n'), 'error');
  }
  
  return isValid;
+}
+
+function toggleStudentSection(show) {
+ const step7 = document.getElementById('step-7');
+ const formGroups = step7.querySelectorAll('.form__group');
+ const studentSection = formGroups[1].querySelector('.collaborator-list');
+ 
+ if (show) {
+  // Mostrar la sección de estudiantes
+  studentSection.style.display = 'flex';
+  studentSection.style.flexDirection = 'column';
+ } else {
+  // Ocultar la sección de estudiantes
+  studentSection.style.display = 'none';
+ }
 }
 
 function addStudent() {
  if (!validateForm('modal-estudiante')) return;
  
  const modal = document.getElementById('modal-estudiante');
- const nombre = modal.querySelector('.input').value;
- const actividad = modal.querySelectorAll('.input')[1].value;
+ const inputs = modal.querySelectorAll('.input');
+ const nombre = inputs[0].value;
+ const actividad = inputs[1].value;
  const tipoFormacion = modal.querySelector('.select').value;
  const grado = modal.querySelector('.card--active .card__title').textContent;
  
@@ -191,11 +445,17 @@ function addStudent() {
   grado: grado
  };
  
- // Encuentra la lista de colaboradores de estudiantes
- const studentSection = document.querySelector('#step-7 .form__group:last-child .collaborator-list');
+ // Encuentra la lista de colaboradores de estudiantes (la segunda form__group)
+ const step7 = document.getElementById('step-7');
+ const formGroups = step7.querySelectorAll('.form__group');
+ const studentSection = formGroups[1].querySelector('.collaborator-list');
  const newStudent = createCollaboratorElement(studentData, 'estudiante');
  
  studentSection.appendChild(newStudent);
+ 
+ // Mostrar la sección de estudiantes
+ studentSection.style.display = 'flex';
+ studentSection.style.flexDirection = 'column';
  
  // Muestra mensaje de éxito
  showNotification('Estudiante agregado exitosamente', 'success');
@@ -230,15 +490,58 @@ function addProfessor() {
 }
 
 function showNotification(message, type = 'success') {
+ // Remove existing notifications
+ const existingNotifications = document.querySelectorAll('.notification');
+ existingNotifications.forEach(notification => notification.remove());
+ 
  const notification = document.createElement('div');
  notification.className = `notification notification--${type}`;
  notification.textContent = message;
  
  document.body.appendChild(notification);
  
+ // Auto-remove after 5 seconds
  setTimeout(() => {
-  notification.remove();
- }, 3000);
+  if (notification.parentElement) {
+   notification.remove();
+  }
+ }, 5000);
+}
+
+// Enhanced character count for textareas
+function addCharacterCount(textarea) {
+ const maxLength = textarea.getAttribute('maxlength');
+ if (!maxLength) return;
+ 
+ const countElement = document.createElement('div');
+ countElement.className = 'character-count';
+ 
+ const updateCount = () => {
+  const currentLength = textarea.value.length;
+  const remaining = maxLength - currentLength;
+  countElement.textContent = `${currentLength}/${maxLength} caracteres`;
+  
+  countElement.classList.remove('warning', 'error');
+  if (remaining < 50) {
+   countElement.classList.add('warning');
+  }
+  if (remaining < 10) {
+   countElement.classList.add('error');
+  }
+ };
+ 
+ textarea.addEventListener('input', updateCount);
+ textarea.parentElement.appendChild(countElement);
+ updateCount();
+}
+
+// Progress indicator
+function updateProgress() {
+ const totalSteps = 17;
+ const currentProgress = Math.round((currentStep / totalSteps) * 100);
+ 
+ // You can add a progress bar element and update it here
+ console.log(`Progress: ${currentProgress}%`);
 }
 
 // Funciones para incrementar y decrementar contadores
@@ -309,13 +612,45 @@ function removeActivity(button) {
 }
 
 function submitForm() {
+  // Validate final step
+  if (!validateStep(currentStep)) {
+    return;
+  }
+
+  // Validate that all required deliverables have at least one item
+  const deliverables = document.querySelectorAll('.deliverable-count');
+  let totalDeliverables = 0;
+  deliverables.forEach(deliverable => {
+    totalDeliverables += parseInt(deliverable.textContent);
+  });
+
+  if (totalDeliverables === 0) {
+    showNotification('Debe especificar al menos un entregable para el proyecto', 'error');
+    return;
+  }
+
+  // Validate that there are collaborators (at least professors)
+  const step7 = document.getElementById('step-7');
+  const formGroups = step7.querySelectorAll('.form__group');
+  const professorList = formGroups[0].querySelector('.collaborator-list');
+  
+  if (!professorList.children.length) {
+    showNotification('Debe agregar al menos un profesor al proyecto', 'error');
+    return;
+  }
+
   // Show loading notification
-  showNotification('Enviando información del proyecto...', 'success');
+  showNotification('Validando y enviando información del proyecto...', 'success');
   
   // Simulate form submission delay
   setTimeout(() => {
+    // Additional validation passed
+    showNotification('Proyecto enviado exitosamente', 'success');
+    
     // Redirect to confirmation page
-    window.location.href = 'confirmacion.html';
+    setTimeout(() => {
+      window.location.href = 'confirmacion.html';
+    }, 1500);
   }, 2000);
 }
 
@@ -335,6 +670,9 @@ document.addEventListener('DOMContentLoaded', function() {
    const cardGroup = this.closest('.card-select');
    cardGroup.querySelectorAll('.card').forEach(c => c.classList.remove('card--active'));
    this.classList.add('card--active');
+   
+   // Update hidden input in modal
+   updateCardSelection(cardGroup, this);
   });
  });
  
@@ -347,15 +685,189 @@ document.addEventListener('DOMContentLoaded', function() {
   });
  });
  
- // añadir atributo required a los inputs dentro de los modales
- const requiredInputs = document.querySelectorAll('.modal .input');
- requiredInputs.forEach(input => {
-  input.setAttribute('required', 'true');
+ // Real-time validation for inputs
+ const allInputs = document.querySelectorAll('.input, .select');
+ allInputs.forEach(input => {
+  input.addEventListener('blur', function() {
+   validateField(this);
+  });
+  
+  input.addEventListener('input', function() {
+   // Remove error state on input
+   this.classList.remove('error');
+  });
  });
+ 
+ // Initialize card selections with hidden inputs
+ const cardSelects = document.querySelectorAll('.card-select');
+ cardSelects.forEach(cardSelect => {
+  const activeCard = cardSelect.querySelector('.card--active');
+  if (activeCard) {
+   updateCardSelection(cardSelect, activeCard);
+  }
+ });
+ 
+ // Initialize date validation
+ const dateInputs = document.querySelectorAll('input[type="date"]');
+ dateInputs.forEach(input => {
+  input.addEventListener('change', function() {
+   validateDateRange(this);
+  });
+ });
+ 
+ // Add character count to textareas
+ const textareas = document.querySelectorAll('textarea[maxlength]');
+ textareas.forEach(textarea => {
+  addCharacterCount(textarea);
+ });
+ 
+ // Initialize form with saved data if available
+ loadFormData();
+ 
+ // Initialize student section visibility
+ const step7 = document.getElementById('step-7');
+ const formGroups = step7.querySelectorAll('.form__group');
+ const studentList = formGroups[1].querySelector('.collaborator-list');
+ if (studentList && studentList.children.length === 0) {
+  toggleStudentSection(false);
+ }
+ 
+ // Auto-save form data periodically
+ setInterval(saveFormData, 30000); // Save every 30 seconds
+ 
+ // Save form data on page unload
+ window.addEventListener('beforeunload', saveFormData);
  
  // Inicializar el estado de los pasos
  showStep(1);
 });
+
+// Form data persistence
+function saveFormData() {
+ const formData = {};
+ 
+ // Save all input values
+ document.querySelectorAll('.input, .select, textarea').forEach(field => {
+  if (field.name || field.id) {
+   formData[field.name || field.id] = field.value;
+  }
+ });
+ 
+ // Save radio button selections
+ document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+  formData[radio.name] = radio.value;
+ });
+ 
+ // Save card selections
+ document.querySelectorAll('.card--active').forEach(card => {
+  const cardGroup = card.closest('.card-select');
+  const groupId = cardGroup.closest('.form__group').querySelector('.group__label').textContent;
+  formData[groupId] = card.querySelector('.card__title').textContent;
+ });
+ 
+ // Save deliverable counts
+ document.querySelectorAll('.deliverable-count').forEach(counter => {
+  formData[counter.id] = counter.textContent;
+ });
+ 
+ localStorage.setItem('sid-form-data', JSON.stringify(formData));
+}
+
+function loadFormData() {
+ const savedData = localStorage.getItem('sid-form-data');
+ if (!savedData) return;
+ 
+ try {
+  const formData = JSON.parse(savedData);
+  
+  // Restore input values
+  Object.keys(formData).forEach(key => {
+   const field = document.querySelector(`[name="${key}"], #${key}`);
+   if (field && field.type !== 'radio') {
+    field.value = formData[key];
+   }
+  });
+  
+  // Restore radio selections
+  Object.keys(formData).forEach(key => {
+   const radio = document.querySelector(`input[name="${key}"][value="${formData[key]}"]`);
+   if (radio) {
+    radio.checked = true;
+   }
+  });
+  
+  // Restore deliverable counts
+  Object.keys(formData).forEach(key => {
+   const counter = document.getElementById(key);
+   if (counter && counter.classList.contains('deliverable-count')) {
+    counter.textContent = formData[key];
+   }
+  });
+  
+  showNotification('Datos del formulario restaurados automáticamente', 'success');
+ } catch (error) {
+  console.error('Error loading form data:', error);
+ }
+}
+
+// Clear saved data
+function clearFormData() {
+ localStorage.removeItem('sid-form-data');
+ showNotification('Datos del formulario eliminados', 'success');
+}
+
+// Real-time field validation
+function validateField(field) {
+  field.classList.remove('error');
+  
+  if (field.hasAttribute('required') && !field.value.trim()) {
+    field.classList.add('error');
+    return false;
+  }
+  
+  if (field.hasAttribute('minlength') && field.value.trim().length < parseInt(field.getAttribute('minlength'))) {
+    field.classList.add('error');
+    return false;
+  }
+  
+  if (field.hasAttribute('maxlength') && field.value.trim().length > parseInt(field.getAttribute('maxlength'))) {
+    field.classList.add('error');
+    return false;
+  }
+  
+  if (field.hasAttribute('pattern') && field.value.trim() && !new RegExp(field.getAttribute('pattern')).test(field.value)) {
+    field.classList.add('error');
+    return false;
+  }
+  
+  if (field.type === 'email' && field.value.trim() && !validateEmail(field.value)) {
+    field.classList.add('error');
+    return false;
+  }
+  
+  return true;
+}
+
+// Validate date range
+function validateDateRange(dateInput) {
+  const container = dateInput.closest('.form__group');
+  const dateInputs = container.querySelectorAll('input[type="date"]');
+  
+  if (dateInputs.length === 2) {
+    const startDate = new Date(dateInputs[0].value);
+    const endDate = new Date(dateInputs[1].value);
+    
+    dateInputs.forEach(input => input.classList.remove('error'));
+    
+    if (startDate && endDate && startDate >= endDate) {
+      dateInputs.forEach(input => input.classList.add('error'));
+      showNotification('La fecha de inicio debe ser anterior a la fecha de fin', 'error');
+      return false;
+    }
+  }
+  
+  return true;
+}
 
 // Función para navegar directamente a una sección haciendo clic en el número
 function navigateToSection(sectionNumber) {

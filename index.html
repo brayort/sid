@@ -73,13 +73,14 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Nombre completo</label>
-     <input type="text" class="input" placeholder="Escriba su nombre completo" value="Perla Aguilar Navarrete">
+     <label class="group__label">Nombre completo *</label>
+     <input type="text" class="input" placeholder="Escriba su nombre completo" value="Perla Aguilar Navarrete" required minlength="5" maxlength="100">
     </div>
 
     <div class="form__group">
-     <label class="group__label">Programa académico al que pertenece</label>
-     <select class="select">
+     <label class="group__label">Programa académico al que pertenece *</label>
+     <select class="select" required>
+      <option value="">Seleccione una opción</option>
       <option value="1">Ciencias Básicas e Ingenierías</option>
       <option value="2">Ciencias Biológicas Agropecuarias</option>
       <option value="3" selected>Ciencias Económicas y Administrativas</option>
@@ -91,8 +92,8 @@
 
     
     <div class="form__group">
-     <label class="group__label">Máximo grado de estudios obtenido</label>
-
+     <label class="group__label">Máximo grado de estudios obtenido *</label>
+     <input type="hidden" name="grado-estudios" value="Doctorado" required>
      <div class="card-select">
       <div class="card">
        <svg width="24" height="30" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +113,7 @@
        <div class="card__title">Maestría</div>
       </div>
      
-      <div class="card">
+      <div class="card card--active">
        <svg width="24" height="30" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
          d="M3 30C2.175 30 1.469 29.7065 0.882 29.1195C0.295 28.5325 0.001 27.826 0 27V3C0 2.175 0.294 1.469 0.882 0.882C1.47 0.295 2.176 0.001 3 0H21C21.825 0 22.5315 0.294 23.1195 0.882C23.7075 1.47 24.001 2.176 24 3V27C24 27.825 23.7065 28.5315 23.1195 29.1195C22.5325 29.7075 21.826 30.001 21 30H3ZM10.5 13.5L14.25 11.25L18 13.5V3H10.5V13.5Z"
@@ -124,13 +125,13 @@
      </div>
 
      <div class="form__group">
-     <label class="group__label">¿Pertenece al S.N.I?</label>
+     <label class="group__label">¿Pertenece al S.N.I.? *</label>
        <div>
-       <input type="radio" class="radio" name="pertenece"/>
+       <input type="radio" class="radio" name="pertenece" value="si" required/>
        <label>Sí</label>
       </div>
        <div>
-       <input type="radio" class="radio" name="pertenece"/>
+       <input type="radio" class="radio" name="pertenece" value="no" checked required/>
        <label>No</label>
       </div>
      </div>
@@ -160,13 +161,13 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Nombre del cuerpo académico reconocido por PRODEP</label>
-     <input type="text" class="input" placeholder="CIIDET-CA" value="CIIDET-CA">
+     <label class="group__label">Nombre del cuerpo académico reconocido por PRODEP *</label>
+     <input type="text" class="input" placeholder="CIIDET-CA" value="CIIDET-CA" required minlength="3" maxlength="50">
     </div>
 
     <div class="form__group">
-     <label class="group__label">Grado de consolidación del C.A (Cuerpo Académico)</label>
-
+     <label class="group__label">Grado de consolidación del C.A (Cuerpo Académico) *</label>
+     <input type="hidden" name="consolidacion-ca" value="Formación" required>
      <div class="card-select">
       <div class="card card--active">
        <div class="card__title">Formación</div>
@@ -183,13 +184,13 @@
     </div>
 
     <div class="form__group">
-     <label class="group__label">Pertenece al perfil PRODEP</label>
+     <label class="group__label">Pertenece al perfil PRODEP *</label>
      <div>
-      <input type="radio" class="radio" name="prodep" id="prodep-si" checked/>
+      <input type="radio" class="radio" name="prodep" id="prodep-si" value="si" checked required/>
       <label for="prodep-si">Sí</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="prodep" id="prodep-no"/>
+      <input type="radio" class="radio" name="prodep" id="prodep-no" value="no" required/>
       <label for="prodep-no">No</label>
      </div>
     </div>
@@ -220,8 +221,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Tipo de investigación</label>
-     <select class="select">
+     <label class="group__label">Tipo de investigación *</label>
+     <select class="select" required>
       <option value="">Seleccione una opción</option>
       <option value="desarrollo-experimental" selected>Desarrollo experimental</option>
       <option value="investigacion-basica">Investigación básica</option>
@@ -230,29 +231,29 @@
     </div>
 
     <div class="form__group">
-     <label class="group__label">Tipo de financiamiento</label>
+     <label class="group__label">Tipo de financiamiento *</label>
      <div>
-      <input type="radio" class="radio" name="financiamiento" id="sin-financiamiento" checked/>
+      <input type="radio" class="radio" name="financiamiento" id="sin-financiamiento" value="sin-financiamiento" checked required/>
       <label for="sin-financiamiento">Sin financiamiento</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="financiamiento" id="interno"/>
+      <input type="radio" class="radio" name="financiamiento" id="interno" value="interno" required/>
       <label for="interno">Interno</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="financiamiento" id="externo"/>
+      <input type="radio" class="radio" name="financiamiento" id="externo" value="externo" required/>
       <label for="externo">Externo</label>
      </div>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Institución aportante</label>
-     <input type="text" class="input" placeholder="Escriba la institución" value="Universidad Autónoma de Nayarit">
+     <label class="group__label">Institución aportante *</label>
+     <input type="text" class="input" placeholder="Escriba la institución" value="Universidad Autónoma de Nayarit" required minlength="5" maxlength="100">
     </div>
 
     <div class="form__group">
-     <label class="group__label">Monto aprobado</label>
-     <input type="text" class="input" placeholder="$ 0.00 MXN" value="$ 0.00 MXN">
+     <label class="group__label">Monto aprobado *</label>
+     <input type="text" class="input" placeholder="$ 0.00 MXN" value="$ 0.00 MXN" required pattern="^\$\s*\d{1,3}(,\d{3})*(\.\d{1,2})?\s*MXN$">
     </div>
 
     <div class="form__actions">
@@ -276,42 +277,42 @@
    
    <div class="card__header">
     <div class="header__step"><strong>3</strong> de 6</div>
-    <h2 class="title">Tipo de proyecto</h2>
+    <h2 class="title">Detalles del financiamiento</h2>
    </div>
 
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Tipo de fondo</label>
+     <label class="group__label">Tipo de fondo *</label>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="propios"/>
+      <input type="radio" class="radio" name="tipo-fondo" id="propios" value="propios" required/>
       <label for="propios">Propios</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="privado"/>
+      <input type="radio" class="radio" name="tipo-fondo" id="privado" value="privado" required/>
       <label for="privado">Privado</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="gobierno" checked/>
+      <input type="radio" class="radio" name="tipo-fondo" id="gobierno" value="gobierno" checked required/>
       <label for="gobierno">Gobierno</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="fondos-publicos"/>
+      <input type="radio" class="radio" name="tipo-fondo" id="fondos-publicos" value="fondos-publicos" required/>
       <label for="fondos-publicos">Fondos públicos generales universitarios</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="instituciones-privadas"/>
+      <input type="radio" class="radio" name="tipo-fondo" id="instituciones-privadas" value="instituciones-privadas" required/>
       <label for="instituciones-privadas">Instituciones privadas no lucrativas</label>
      </div>
      <div>
-      <input type="radio" class="radio" name="tipo-fondo" id="exterior"/>
+      <input type="radio" class="radio" name="tipo-fondo" id="exterior" value="exterior" required/>
       <label for="exterior">Exterior</label>
      </div>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Acción de Transferencia de Tecnología y aplicación del conocimiento</label>
-     <input type="text" class="input" placeholder="Escriba la acción">
+     <label class="group__label">Acción de Transferencia de Tecnología y aplicación del conocimiento *</label>
+     <input type="text" class="input" placeholder="Escriba la acción" value="Desarrollo de sistema informático para gestión de proyectos" required minlength="10" maxlength="200">
     </div>
 
     <div class="form__actions">
@@ -340,22 +341,22 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Nombre del proyecto</label>
-     <input type="text" class="input" placeholder="Escriba el nombre del proyecto" value="Sistema de investigación y Posgrado">
+     <label class="group__label">Nombre del proyecto *</label>
+     <input type="text" class="input" placeholder="Escriba el nombre del proyecto" value="Sistema de investigación y Posgrado" required minlength="10" maxlength="150">
     </div>
 
     <div class="form__group">
-     <label class="group__label">Vigencia</label>
+     <label class="group__label">Vigencia *</label>
      <div style="display: flex; gap: 12px; align-items: center;">
-      <input type="date" class="input" value="2025-07-15" style="flex: 1;">
+      <input type="date" class="input" value="2025-07-15" style="flex: 1;" required>
       <span>Hasta</span>
-      <input type="date" class="input" value="2025-09-15" style="flex: 1;">
+      <input type="date" class="input" value="2025-09-15" style="flex: 1;" required>
      </div>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Área académica de la UAN</label>
-     <select class="select">
+     <label class="group__label">Área académica de la UAN *</label>
+     <select class="select" required>
       <option value="">Seleccione una opción</option>
       <option value="ciencias-economicas" selected>Ciencias Económicas y Administrativas</option>
       <option value="ciencias-basicas">Ciencias Básicas e Ingenierías</option>
@@ -367,13 +368,15 @@
     </div>
 
     <div class="form__group">
-     <label class="group__label">Área de estudio (INEGI)</label>
-     <select class="select">
+     <label class="group__label">Área de estudio (INEGI) *</label>
+     <select class="select" required>
       <option value="">Seleccione una opción</option>
       <option value="educacion" selected>Educación</option>
       <option value="tecnologia">Tecnología</option>
       <option value="salud">Salud</option>
       <option value="ingenieria">Ingeniería</option>
+      <option value="ciencias-sociales">Ciencias Sociales</option>
+      <option value="economia">Economía</option>
      </select>
     </div>
 
@@ -483,7 +486,7 @@
 
     <div class="form__group">
      <label class="group__label">Otro</label>
-     <input type="text" class="input" placeholder="Patentes, fotografía científica etc." value="">
+     <input type="text" class="input" placeholder="Patentes, fotografía científica etc." value="Patentes de software, material audiovisual" maxlength="200">
     </div>
 
     <div class="form__actions">
@@ -582,7 +585,7 @@
        </div>
        <div class="collaborator-info">
         <div class="collaborator-name">Adán Mejía Cortes</div>
-        <div class="collaborator-role">Licenciatura - Analista</div>
+        <div class="collaborator-role">Licenciatura - Analista (Prácticas profesionales)</div>
        </div>
        <button type="button" class="btn-remove" onclick="removeCollaborator(this)">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -600,7 +603,7 @@
        </div>
        <div class="collaborator-info">
         <div class="collaborator-name">Hector Yair Medrano Coronel</div>
-        <div class="collaborator-role">Licenciatura - Desarrollador</div>
+        <div class="collaborator-role">Licenciatura - Desarrollador (Servicio Social)</div>
        </div>
        <button type="button" class="btn-remove" onclick="removeCollaborator(this)">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -618,7 +621,7 @@
        </div>
        <div class="collaborator-info">
         <div class="collaborator-name">Brayan Ortiz Ramírez</div>
-        <div class="collaborator-role">Licenciatura - Diseñador</div>
+        <div class="collaborator-role">Licenciatura - Diseñador (Becario)</div>
        </div>
        <button type="button" class="btn-remove" onclick="removeCollaborator(this)">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -655,13 +658,17 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Objetivo general</label>
-     <textarea class="input" placeholder="Describa el objetivo general del proyecto" rows="4"></textarea>
+     <label class="group__label">Objetivo general *</label>
+     <textarea class="input" placeholder="Describa el objetivo general del proyecto" rows="4" required minlength="50" maxlength="500">Desarrollar un sistema informático integral para la gestión de proyectos de investigación y posgrado que optimice los procesos administrativos y académicos en la Universidad Autónoma de Nayarit.</textarea>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Objetivos específicos</label>
-     <textarea class="input" placeholder="Liste los objetivos específicos del proyecto (uno por línea)" rows="6"></textarea>
+     <label class="group__label">Objetivos específicos *</label>
+     <textarea class="input" placeholder="Liste los objetivos específicos del proyecto (uno por línea)" rows="6" required minlength="100" maxlength="1000">1. Diseñar una interfaz de usuario intuitiva y accesible para estudiantes y profesores.
+2. Implementar un módulo de seguimiento de proyectos con notificaciones automáticas.
+3. Crear un sistema de reportes y estadísticas para la administración.
+4. Desarrollar funcionalidades de colaboración entre investigadores.
+5. Establecer protocolos de seguridad y respaldo de información.</textarea>
     </div>
 
     <div class="form__actions">
@@ -690,8 +697,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Breve descripción del proyecto</label>
-     <textarea class="input" placeholder="Proporcione una descripción detallada del proyecto, incluyendo su propósito, alcance y principales características" rows="8"></textarea>
+     <label class="group__label">Breve descripción del proyecto *</label>
+     <textarea class="input" placeholder="Proporcione una descripción detallada del proyecto, incluyendo su propósito, alcance y principales características" rows="8" required minlength="100" maxlength="2000">El Sistema de Investigación y Posgrado (SID) es una plataforma web integral diseñada para optimizar la gestión de proyectos académicos y de investigación en la Universidad Autónoma de Nayarit. Este sistema permitirá a estudiantes, profesores y administradores colaborar de manera eficiente en el desarrollo, seguimiento y evaluación de proyectos de investigación, tesis y actividades de posgrado. La plataforma incluye funcionalidades de registro de proyectos, asignación de recursos, seguimiento de cronogramas, generación de reportes y comunicación entre participantes.</textarea>
     </div>
 
     <div class="form__actions">
@@ -720,8 +727,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Antecedentes teóricos y referenciales</label>
-     <textarea class="input" placeholder="Describa los antecedentes teóricos y referenciales que sustentan el proyecto, incluyendo teorías relevantes, estudios previos y marco conceptual" rows="10"></textarea>
+     <label class="group__label">Antecedentes teóricos y referenciales *</label>
+     <textarea class="input" placeholder="Describa los antecedentes teóricos y referenciales que sustentan el proyecto, incluyendo teorías relevantes, estudios previos y marco conceptual" rows="10" required minlength="200" maxlength="3000">La gestión de proyectos académicos requiere herramientas especializadas que faciliten la colaboración y el seguimiento sistemático. Según el Project Management Institute (PMI), la implementación de sistemas de gestión de proyectos incrementa la eficiencia en un 30-40%. Estudios previos en universidades mexicanas demuestran que la digitalización de procesos administrativos académicos mejora la transparencia y reduce los tiempos de trámite. El marco teórico se basa en metodologías ágiles de desarrollo de software, principios de experiencia de usuario (UX) y modelos de gestión de conocimiento aplicados al contexto educativo superior.</textarea>
     </div>
 
     <div class="form__actions">
@@ -750,8 +757,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Justificación</label>
-     <textarea class="input" placeholder="Justifique la importancia y relevancia del proyecto, explicando por qué es necesario realizarlo y qué beneficios aportará" rows="8"></textarea>
+     <label class="group__label">Justificación *</label>
+     <textarea class="input" placeholder="Justifique la importancia y relevancia del proyecto, explicando por qué es necesario realizarlo y qué beneficios aportará" rows="8" required minlength="150" maxlength="2000">La Universidad Autónoma de Nayarit requiere modernizar sus procesos de gestión académica para mejorar la eficiencia y transparencia en el manejo de proyectos de investigación. Actualmente, muchos procesos se realizan de forma manual, lo que genera demoras, errores y dificultades en el seguimiento. La implementación de este sistema permitirá automatizar procesos, facilitar la comunicación entre participantes, mejorar el control de calidad y proporcionar datos precisos para la toma de decisiones. Esto beneficiará directamente a más de 500 estudiantes de posgrado y 200 profesores investigadores de la institución.</textarea>
     </div>
 
     <div class="form__actions">
@@ -780,8 +787,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Metodología</label>
-     <textarea class="input" placeholder="Describa la metodología que se utilizará para desarrollar el proyecto, incluyendo métodos, técnicas, herramientas y procedimientos" rows="10"></textarea>
+     <label class="group__label">Metodología *</label>
+     <textarea class="input" placeholder="Describa la metodología que se utilizará para desarrollar el proyecto, incluyendo métodos, técnicas, herramientas y procedimientos" rows="10" required minlength="200" maxlength="3000">Se utilizará una metodología ágil de desarrollo de software (Scrum) con las siguientes fases: 1) Análisis de requerimientos mediante entrevistas con usuarios finales y stakeholders, 2) Diseño de la arquitectura del sistema utilizando patrones MVC, 3) Desarrollo iterativo utilizando tecnologías web modernas (HTML5, CSS3, JavaScript, PHP, MySQL), 4) Pruebas unitarias y de integración en cada iteración, 5) Implementación piloto con grupo reducido de usuarios, 6) Despliegue gradual y capacitación de usuarios. Se realizarán reuniones semanales de seguimiento y evaluación continua de la calidad del software.</textarea>
     </div>
 
     <div class="form__actions">
@@ -810,8 +817,13 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Referencias bibliográficas</label>
-     <textarea class="input" placeholder="Liste las referencias bibliográficas utilizadas en el proyecto, siguiendo el formato APA o el estilo requerido" rows="12"></textarea>
+     <label class="group__label">Referencias bibliográficas *</label>
+     <textarea class="input" placeholder="Liste las referencias bibliográficas utilizadas en el proyecto, siguiendo el formato APA o el estilo requerido" rows="12" required minlength="100" maxlength="2000">1. Project Management Institute. (2023). A Guide to the Project Management Body of Knowledge (PMBOK Guide). PMI.
+2. Sommerville, I. (2022). Software Engineering (12th ed.). Pearson.
+3. García, M. J., & López, A. (2023). Sistemas de gestión académica en universidades mexicanas. Revista de Educación Superior, 45(2), 123-145.
+4. Nielsen, J. (2021). Usability Engineering for Educational Software. Academic Press.
+5. Scrum.org. (2023). The Scrum Guide. Retrieved from https://scrumguides.org/
+6. Rodríguez, P., & Martínez, L. (2022). Digitalización en instituciones de educación superior. Editorial Universitaria.</textarea>
     </div>
 
     <div class="form__actions">
@@ -840,8 +852,8 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Resultados esperados de la propuesta</label>
-     <textarea class="input" placeholder="Describa los resultados esperados del proyecto, incluyendo productos, impactos y beneficios que se espera obtener al finalizar la investigación" rows="12"></textarea>
+     <label class="group__label">Resultados esperados de la propuesta *</label>
+     <textarea class="input" placeholder="Describa los resultados esperados del proyecto, incluyendo productos, impactos y beneficios que se espera obtener al finalizar la investigación" rows="12" required minlength="200" maxlength="3000">Se espera obtener un sistema web funcional que incluya: 1) Plataforma de registro y seguimiento de proyectos con interfaz intuitiva, 2) Base de datos centralizada con información de proyectos, participantes y recursos, 3) Módulo de reportes y estadísticas en tiempo real, 4) Sistema de notificaciones automáticas para fechas importantes, 5) Documentación técnica y manual de usuario completos. Los beneficios incluyen: reducción del 40% en tiempo de trámites administrativos, mejora en la comunicación entre participantes, incremento en la transparencia de procesos, y facilitación del seguimiento de proyectos. Se espera impactar positivamente a más de 700 usuarios directos de la comunidad universitaria.</textarea>
     </div>
 
     <div class="form__actions">
@@ -870,18 +882,18 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Usuario específico de los resultados o productos del proyecto</label>
-     <textarea class="input" placeholder="Describa quién será el usuario específico que se beneficiará directamente de los resultados o productos del proyecto" rows="4"></textarea>
+     <label class="group__label">Usuario específico de los resultados o productos del proyecto *</label>
+     <textarea class="input" placeholder="Describa quién será el usuario específico que se beneficiará directamente de los resultados o productos del proyecto" rows="4" required minlength="50" maxlength="500">Los usuarios específicos incluyen: estudiantes de posgrado (maestría y doctorado), profesores investigadores, coordinadores de programas académicos, personal administrativo de la Secretaría de Investigación y Posgrado, y directivos universitarios responsables de la gestión de proyectos académicos en la Universidad Autónoma de Nayarit.</textarea>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Impacto científico</label>
-     <textarea class="input" placeholder="Describa el impacto científico esperado del proyecto (contribución al conocimiento, avances teóricos, metodológicos, etc.)" rows="4"></textarea>
+     <label class="group__label">Impacto científico *</label>
+     <textarea class="input" placeholder="Describa el impacto científico esperado del proyecto (contribución al conocimiento, avances teóricos, metodológicos, etc.)" rows="4" required minlength="50" maxlength="500">El proyecto contribuirá al desarrollo de metodologías de gestión de proyectos académicos específicas para el contexto universitario mexicano. Se generarán métricas y análisis de procesos que podrán ser utilizados por otras instituciones. Los resultados serán publicados en revistas especializadas en tecnología educativa y gestión universitaria.</textarea>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Impacto tecnológico</label>
-     <textarea class="input" placeholder="Describa el impacto tecnológico esperado del proyecto (desarrollo de nuevas tecnologías, mejoras en procesos, innovaciones técnicas, etc.)" rows="4"></textarea>
+     <label class="group__label">Impacto tecnológico *</label>
+     <textarea class="input" placeholder="Describa el impacto tecnológico esperado del proyecto (desarrollo de nuevas tecnologías, mejoras en procesos, innovaciones técnicas, etc.)" rows="4" required minlength="50" maxlength="500">Se desarrollará una plataforma tecnológica escalable que podrá ser adaptada y replicada en otras universidades. El sistema incluirá innovaciones en interfaces de usuario, automatización de procesos administrativos y integración con sistemas existentes. Se creará un modelo de arquitectura de software específico para gestión académica.</textarea>
     </div>
 
     <div class="form__actions">
@@ -910,18 +922,18 @@
    <form class="form">
 
     <div class="form__group">
-     <label class="group__label">Impacto social</label>
-     <textarea class="input" placeholder="Describa el impacto social esperado del proyecto (beneficios para la comunidad, mejoras en calidad de vida, desarrollo social, etc.)" rows="4"></textarea>
+     <label class="group__label">Impacto social *</label>
+     <textarea class="input" placeholder="Describa el impacto social esperado del proyecto (beneficios para la comunidad, mejoras en calidad de vida, desarrollo social, etc.)" rows="4" required minlength="50" maxlength="500">El proyecto mejorará la calidad de la educación superior en la región, facilitará el acceso a información académica y promoverá la transparencia en procesos universitarios. Los graduados tendrán mejor preparación para el mercado laboral y la investigación, contribuyendo al desarrollo social y económico de Nayarit.</textarea>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Impacto económico</label>
-     <textarea class="input" placeholder="Describa el impacto económico esperado del proyecto (generación de valor, reducción de costos, oportunidades de negocio, etc.)" rows="4"></textarea>
+     <label class="group__label">Impacto económico *</label>
+     <textarea class="input" placeholder="Describa el impacto económico esperado del proyecto (generación de valor, reducción de costos, oportunidades de negocio, etc.)" rows="4" required minlength="50" maxlength="500">Se espera una reducción del 30% en costos operativos de la gestión académica, menor uso de papel y recursos físicos, y optimización del tiempo del personal administrativo. El sistema puede ser licenciado a otras instituciones, generando ingresos adicionales para la universidad.</textarea>
     </div>
 
     <div class="form__group">
-     <label class="group__label">Impacto ambiental</label>
-     <textarea class="input" placeholder="Describa el impacto ambiental esperado del proyecto (sostenibilidad, conservación, reducción de impacto ecológico, etc.)" rows="4"></textarea>
+     <label class="group__label">Impacto ambiental *</label>
+     <textarea class="input" placeholder="Describa el impacto ambiental esperado del proyecto (sostenibilidad, conservación, reducción de impacto ecológico, etc.)" rows="4" required minlength="50" maxlength="500">La digitalización de procesos reducirá significativamente el consumo de papel y materiales de oficina. Se estima una reducción del 60% en uso de papel para trámites administrativos, contribuyendo a la sostenibilidad ambiental y a las políticas de universidad verde de la institución.</textarea>
     </div>
 
     <div class="form__actions">
@@ -1025,8 +1037,8 @@
            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
            </svg>
-          </button>
-         </td>
+         </button>
+        </td>
         </tr>
         <tr class="activity-row">
          <td>
@@ -1048,8 +1060,8 @@
            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
            </svg>
-          </button>
-         </td>
+         </button>
+        </td>
         </tr>
        </tbody>
       </table>
@@ -1075,7 +1087,7 @@
 
 </div>
 
- <!-- Modal pal estudiante -->
+ <!-- Modal para el estudiante -->
  <div id="modal-estudiante" class="modal" style="display: none;">
   <div class="modal-content">
    <div class="modal-header">
