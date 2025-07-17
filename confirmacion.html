@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Registro Exitoso | SID</title>
+ <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+ <link rel="stylesheet" href="css/reset.css">
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="grid">
+ <header class="header">
+  <div class="header__brand">
+   <img src="./images/logo_sip.png" alt="Secretaría de Investigación y Posgrado" width="400px">
+  </div>
+ </header>
+
+ <aside class="sidebar">
+  <div class="confirmation-sidebar">
+   <div class="success-icon">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <circle cx="40" cy="40" r="40" fill="#22C55E"/>
+     <path d="M25 40L35 50L55 30" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+   </div>
+   <h3 class="confirmation-title">¡Registro Exitoso!</h3>
+   <p class="confirmation-subtitle">Su proyecto ha sido enviado correctamente</p>
+  </div>
+ </aside>
+
+ <main class="main">
+  <div class="layout confirmation-layout">
+   <div class="confirmation-content">
+    <h2 class="title">Recibido</h2>
+    <div class="confirmation-message">
+     <p class="message-text">
+      Su registro de proyecto ha sido recibido exitosamente. 
+      Pronto nos contactaremos con usted para continuar con el proceso de evaluación.
+     </p>
+     
+     <div class="confirmation-details">
+      <div class="detail-item">
+       <strong>Fecha de envío:</strong> 
+       <span id="submission-date"></span>
+      </div>
+      <div class="detail-item">
+       <strong>Número de referencia:</strong> 
+       <span id="reference-number"></span>
+      </div>
+     </div>
+
+     <div class="next-steps">
+      <h3>Próximos pasos:</h3>
+      <ul>
+       <li>Revisaremos su propuesta de proyecto</li>
+       <li>Un miembro de nuestro equipo se pondrá en contacto con usted</li>
+       <li>Le notificaremos sobre el estado de su solicitud</li>
+       <li>Recibirá más información sobre el proceso de evaluación</li>
+      </ul>
+     </div>
+
+     <div class="contact-info">
+      <h3>Información de contacto:</h3>
+      <p>
+       <strong>Secretaría de Investigación y Posgrado</strong><br>
+       Universidad Autónoma de Nayarit<br>
+       Email: investigacion@uan.edu.mx<br>
+       Teléfono: +52 (311) 211-8800
+      </p>
+     </div>
+    </div>
+
+    <div class="confirmation-actions">
+     <button type="button" class="btn btn--primary" onclick="window.location.href='index.html'">
+      Registrar otro proyecto
+     </button>
+     <button type="button" class="btn btn--secondary" onclick="window.print()">
+      Imprimir confirmación
+     </button>
+    </div>
+   </div>
+  </div>
+ </main>
+</div>
+
+<script>
+// Generate reference number and set date
+document.addEventListener('DOMContentLoaded', function() {
+ // Set current date
+ const now = new Date();
+ const dateOptions = { 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit'
+ };
+ document.getElementById('submission-date').textContent = now.toLocaleDateString('es-ES', dateOptions);
+ 
+ // Generate reference number
+ const referenceNumber = 'SID-' + now.getFullYear() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+ document.getElementById('reference-number').textContent = referenceNumber;
+});
+</script>
+
+</body>
+</html>

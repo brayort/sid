@@ -4,6 +4,7 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Registro proyecto | SID</title>
+ <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
  <link rel="stylesheet" href="css/reset.css">
  <link rel="stylesheet" href="css/style.css">
 </head>
@@ -632,8 +633,435 @@
      <button type="button" class="btn btn--secondary" onclick="prevStep()">
       Regresar
      </button>
-     <button type="button" class="btn btn--primary has-icon">
-      Finalizar
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 8 - Objetivos -->
+  <div class="layout step-content" id="step-8" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>1</strong> de 6</div>
+    <h2 class="title">Objetivos del proyecto</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Objetivo general</label>
+     <textarea class="input" placeholder="Describa el objetivo general del proyecto" rows="4"></textarea>
+    </div>
+
+    <div class="form__group">
+     <label class="group__label">Objetivos específicos</label>
+     <textarea class="input" placeholder="Liste los objetivos específicos del proyecto (uno por línea)" rows="6"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 9 - Descripción del proyecto -->
+  <div class="layout step-content" id="step-9" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>2</strong> de 6</div>
+    <h2 class="title">Descripción del proyecto</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Breve descripción del proyecto</label>
+     <textarea class="input" placeholder="Proporcione una descripción detallada del proyecto, incluyendo su propósito, alcance y principales características" rows="8"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 10 - Antecedentes -->
+  <div class="layout step-content" id="step-10" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>3</strong> de 6</div>
+    <h2 class="title">Antecedentes teóricos y referenciales</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Antecedentes teóricos y referenciales</label>
+     <textarea class="input" placeholder="Describa los antecedentes teóricos y referenciales que sustentan el proyecto, incluyendo teorías relevantes, estudios previos y marco conceptual" rows="10"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 11 - Justificación -->
+  <div class="layout step-content" id="step-11" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>4</strong> de 6</div>
+    <h2 class="title">Justificación</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Justificación</label>
+     <textarea class="input" placeholder="Justifique la importancia y relevancia del proyecto, explicando por qué es necesario realizarlo y qué beneficios aportará" rows="8"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 12 - Metodología -->
+  <div class="layout step-content" id="step-12" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>5</strong> de 6</div>
+    <h2 class="title">Metodología</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Metodología</label>
+     <textarea class="input" placeholder="Describa la metodología que se utilizará para desarrollar el proyecto, incluyendo métodos, técnicas, herramientas y procedimientos" rows="10"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 13 - Referencias bibliográficas -->
+  <div class="layout step-content" id="step-13" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>6</strong> de 6</div>
+    <h2 class="title">Referencias bibliográficas</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Referencias bibliográficas</label>
+     <textarea class="input" placeholder="Liste las referencias bibliográficas utilizadas en el proyecto, siguiendo el formato APA o el estilo requerido" rows="12"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 14 - Resultados esperados -->
+  <div class="layout step-content" id="step-14" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>1</strong> de 1</div>
+    <h2 class="title">Resultados esperados</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Resultados esperados de la propuesta</label>
+     <textarea class="input" placeholder="Describa los resultados esperados del proyecto, incluyendo productos, impactos y beneficios que se espera obtener al finalizar la investigación" rows="12"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 15 - Impacto de la propuesta (Parte 1) -->
+  <div class="layout step-content" id="step-15" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>1</strong> de 2</div>
+    <h2 class="title">Impacto de la propuesta</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Usuario específico de los resultados o productos del proyecto</label>
+     <textarea class="input" placeholder="Describa quién será el usuario específico que se beneficiará directamente de los resultados o productos del proyecto" rows="4"></textarea>
+    </div>
+
+    <div class="form__group">
+     <label class="group__label">Impacto científico</label>
+     <textarea class="input" placeholder="Describa el impacto científico esperado del proyecto (contribución al conocimiento, avances teóricos, metodológicos, etc.)" rows="4"></textarea>
+    </div>
+
+    <div class="form__group">
+     <label class="group__label">Impacto tecnológico</label>
+     <textarea class="input" placeholder="Describa el impacto tecnológico esperado del proyecto (desarrollo de nuevas tecnologías, mejoras en procesos, innovaciones técnicas, etc.)" rows="4"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 16 - Impacto de la propuesta (Parte 2) -->
+  <div class="layout step-content" id="step-16" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>2</strong> de 2</div>
+    <h2 class="title">Impacto de la propuesta</h2>
+   </div>
+
+   <form class="form">
+
+    <div class="form__group">
+     <label class="group__label">Impacto social</label>
+     <textarea class="input" placeholder="Describa el impacto social esperado del proyecto (beneficios para la comunidad, mejoras en calidad de vida, desarrollo social, etc.)" rows="4"></textarea>
+    </div>
+
+    <div class="form__group">
+     <label class="group__label">Impacto económico</label>
+     <textarea class="input" placeholder="Describa el impacto económico esperado del proyecto (generación de valor, reducción de costos, oportunidades de negocio, etc.)" rows="4"></textarea>
+    </div>
+
+    <div class="form__group">
+     <label class="group__label">Impacto ambiental</label>
+     <textarea class="input" placeholder="Describa el impacto ambiental esperado del proyecto (sostenibilidad, conservación, reducción de impacto ecológico, etc.)" rows="4"></textarea>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="nextStep()">
+      Continuar
+      <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+     </button>
+    </div>
+
+   </form>
+  </div>
+
+  <!-- Pantalla 17 - Cronograma de actividades -->
+  <div class="layout step-content" id="step-17" style="display: none;">
+   
+   <div class="card__header">
+    <div class="header__step"><strong>1</strong> de 1</div>
+    <h2 class="title">Cronograma de actividades</h2>
+   </div>
+
+   <form class="form">
+    <div class="form__group">
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <label class="group__label">Actividades del proyecto</label>
+      <button type="button" class="btn-add" onclick="addActivity()">
+       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 1V15M1 8H15" stroke="#22C55E" stroke-width="2" stroke-linecap="round"/>
+       </svg>
+       Agregar actividad
+      </button>
+     </div>
+
+     <div class="schedule-container">
+      <table class="schedule-table">
+       <thead>
+        <tr>
+         <th class="activity-header">Actividad</th>
+         <th class="description-header">Descripción</th>
+         <th class="period-header" colspan="8">Período (trimestre)</th>
+         <th class="actions-header">Acciones</th>
+        </tr>
+        <tr class="period-subheader">
+         <th colspan="2"></th>
+         <th>1</th>
+         <th>2</th>
+         <th>3</th>
+         <th>4</th>
+         <th>5</th>
+         <th>6</th>
+         <th>7</th>
+         <th>8</th>
+         <th></th>
+        </tr>
+       </thead>
+       <tbody id="schedule-tbody">
+        <tr class="activity-row">
+         <td>
+          <input type="text" class="schedule-input" placeholder="Actividad 1" value="Revisión bibliográfica">
+         </td>
+         <td>
+          <input type="text" class="schedule-input" placeholder="Descripción de la actividad" value="Revisión exhaustiva de literatura especializada">
+         </td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td>
+          <button type="button" class="btn-remove-activity" onclick="removeActivity(this)">
+           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+           </svg>
+          </button>
+         </td>
+        </tr>
+        <tr class="activity-row">
+         <td>
+          <input type="text" class="schedule-input" placeholder="Actividad 2" value="Diseño metodológico">
+         </td>
+         <td>
+          <input type="text" class="schedule-input" placeholder="Descripción de la actividad" value="Definición de metodología y herramientas">
+         </td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td>
+          <button type="button" class="btn-remove-activity" onclick="removeActivity(this)">
+           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+           </svg>
+          </button>
+         </td>
+        </tr>
+        <tr class="activity-row">
+         <td>
+          <input type="text" class="schedule-input" placeholder="Actividad 3" value="Desarrollo del proyecto">
+         </td>
+         <td>
+          <input type="text" class="schedule-input" placeholder="Descripción de la actividad" value="Implementación y desarrollo del sistema">
+         </td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox" checked></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td><input type="checkbox" class="period-checkbox"></td>
+         <td>
+          <button type="button" class="btn-remove-activity" onclick="removeActivity(this)">
+           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+           </svg>
+          </button>
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+
+    <div class="form__actions">
+     <button type="button" class="btn btn--secondary" onclick="prevStep()">
+      Regresar
+     </button>
+     <button type="button" class="btn btn--primary has-icon" onclick="submitForm()">
+      Enviar
       <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
        <path d="M1 13.5L7 7.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>

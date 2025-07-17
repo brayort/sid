@@ -97,6 +97,55 @@ body {
 .step--active{
  background-color: var(--primary-color) !important;
  color: #ffff !important;
+ box-shadow: 0 0 0 3px rgba(0, 61, 132, 0.3);
+ animation: activePulse 2s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+ 0%, 100% { box-shadow: 0 0 0 3px rgba(0, 61, 132, 0.3); }
+ 50% { box-shadow: 0 0 0 6px rgba(0, 61, 132, 0.2); }
+}
+
+.step--completed {
+ background-color: #0173CB !important;
+ color: transparent !important;
+ position: relative;
+ animation: completedPulse 0.5s ease-in-out;
+}
+
+@keyframes completedPulse {
+ 0% { transform: scale(1); }
+ 50% { transform: scale(1.1); }
+ 100% { transform: scale(1); }
+}
+
+.step--completed::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: #0173CB;
+ border-radius: 50%;
+}
+
+.step--completed::after {
+ content: '✓';
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ font-size: 16px;
+ font-weight: bold;
+ color: white;
+ z-index: 1;
+ animation: checkmarkFade 0.3s ease-in-out 0.2s both;
+}
+
+@keyframes checkmarkFade {
+ 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+ 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .step__content:last-child::after {
@@ -110,7 +159,16 @@ body {
   width: 8px;
   height: 30px;
   background-color: var(--shadow-color);
+  transition: background-color 0.3s ease;
+}
 
+.step__content:has(.step--completed)::after {
+  background-color: #0173CB;
+}
+
+/* Fallback for browsers that don't support :has() */
+.step__content .step__number.step--completed ~ .step__content::after {
+  background-color: #0173CB;
 }
 
 .step__item {
@@ -129,12 +187,48 @@ body {
   color: #898989;
   font-weight: 500;
   background-color: var(--shadow-color);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.step__number:hover:not(.step--active):not(.step--completed) {
+  background-color: #d6d6d6;
+  transform: scale(1.05);
+}
+
+.step__number.step--active:hover,
+.step__number.step--completed:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 61, 132, 0.3);
+  cursor: pointer;
+}
+
+/* Enable pointer events for current and completed steps */
+.step__number.step--active,
+.step__number.step--completed {
+  cursor: pointer;
 }
 
 .step__text {
   font-size: 16px;
   color: #333;
   font-weight: 400;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.step__item:has(.step--active) .step__text,
+.step__item:has(.step--completed) .step__text {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Fallback for browsers that don't support :has() */
+.step__item .step__number.step--active ~ .step__text,
+.step__item .step__number.step--completed ~ .step__text {
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 
@@ -164,6 +258,12 @@ body {
  padding: 20px;
  position: relative;
  z-index: 1;
+}
+
+/* Special layout for schedule step */
+#step-17 .layout {
+ width: 90%;
+ max-width: 1400px;
 }
 
 /* Formularios */
@@ -593,4 +693,326 @@ textarea.input {
 
 .input.error:focus {
  outline: 2px solid #EF4444 !important;
+}
+
+/* Schedule table styles */
+.schedule-container {
+  overflow-x: auto;
+  border: 1px solid var(--shadow-color);
+  border-radius: 8px;
+  background: white;
+  margin-top: 16px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid var(--shadow-color);
+  padding: 12px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.schedule-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.activity-header,
+.description-header {
+  text-align: left;
+  min-width: 150px;
+}
+
+.activity-header {
+  width: 20%;
+}
+
+.description-header {
+  width: 30%;
+}
+
+.period-header {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.period-subheader th {
+  background-color: #e3f2fd;
+  color: var(--primary-color);
+  font-weight: 500;
+  padding: 8px;
+  width: 40px;
+}
+
+.actions-header {
+  width: 60px;
+}
+
+.activity-row td {
+  padding: 8px;
+}
+
+.schedule-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.schedule-input:focus {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.period-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.btn-remove-activity {
+  background: none;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-activity:hover {
+  background-color: #fef2f2;
+  transform: scale(1.1);
+}
+
+.activity-row:hover {
+  background-color: #f8f9fa;
+}
+
+.activity-row:hover .schedule-input {
+  background-color: white;
+}
+
+/* Confirmation page styles */
+.confirmation-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confirmation-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #22C55E;
+  margin: 0;
+}
+
+.confirmation-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.confirmation-layout {
+  width: 85%;
+  max-width: 800px;
+}
+
+.confirmation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.confirmation-message {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.message-text {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+  text-align: center;
+}
+
+.confirmation-details {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item strong {
+  color: #333;
+}
+
+.detail-item span {
+  color: #666;
+  font-family: monospace;
+}
+
+.next-steps {
+  background-color: #e3f2fd;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.next-steps h3 {
+  margin: 0 0 15px 0;
+  color: var(--primary-color);
+  font-size: 18px;
+}
+
+.next-steps ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.next-steps li {
+  padding: 8px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #333;
+}
+
+.next-steps li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #22C55E;
+  font-weight: bold;
+}
+
+.contact-info {
+  background-color: #f0f9ff;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #0ea5e9;
+}
+
+.contact-info h3 {
+  margin: 0 0 15px 0;
+  color: #0ea5e9;
+  font-size: 18px;
+}
+
+.contact-info p {
+  margin: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.confirmation-actions .btn {
+  width: auto;
+  padding: 15px 30px;
+  min-width: 200px;
+}
+
+/* Print styles */
+@media print {
+  .confirmation-actions {
+    display: none;
+  }
+  
+  .grid {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: auto;
+  }
+  
+  .confirmation-layout {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Responsive schedule table */
+@media (max-width: 1400px) {
+  #step-17 .layout {
+    width: 95%;
+  }
+  
+  .schedule-container {
+    overflow-x: scroll;
+  }
+  
+  .schedule-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 1200px) {
+  #step-17 .layout {
+    width: 98%;
+  }
+  
+  .schedule-container {
+    overflow-x: scroll;
+  }
+  
+  .schedule-table {
+    min-width: 1100px;
+  }
 }

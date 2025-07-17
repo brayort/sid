@@ -25,24 +25,47 @@ function showStep(stepNumber) {
   // Mostrar el paso actual
   document.getElementById(`step-${stepNumber}`).style.display = 'block';
   
-  // Solo actualizar indicadores en la barra lateral cuando cambiamos de sección
-  // Sección 1: pasos 1-7, Sección 2: pasos 8-14, etc.
-  const currentSection = Math.ceil(stepNumber / 7);
-  
-  document.querySelectorAll('.step__number').forEach(num => {
-    num.classList.remove('step--active');
-  });
-  
-  const sectionIndicator = document.querySelector(`[data-step="${currentSection}"]`);
-  if (sectionIndicator) {
-    sectionIndicator.classList.add('step--active');
+  // Actualizar indicadores en la barra lateral basado en las secciones
+  let currentSection;
+  if (stepNumber >= 1 && stepNumber <= 7) {
+    currentSection = 1; // Información general
+  } else if (stepNumber >= 8 && stepNumber <= 13) {
+    currentSection = 2; // Protocolo de investigación
+  } else if (stepNumber >= 14 && stepNumber <= 14) {
+    currentSection = 3; // Resultados de propuesta
+  } else if (stepNumber >= 15 && stepNumber <= 16) {
+    currentSection = 4; // Impactos de propuesta
+  } else if (stepNumber >= 17 && stepNumber <= 17) {
+    currentSection = 5; // Cronograma de actividades
   }
+  
+  // Actualizar el estado de todos los pasos
+  updateStepIndicators(currentSection);
   
   currentStep = stepNumber;
 }
 
+function updateStepIndicators(currentSection) {
+  document.querySelectorAll('.step__number').forEach((num, index) => {
+    const stepNumber = index + 1;
+    
+    // Remover todas las clases de estado
+    num.classList.remove('step--active', 'step--completed');
+    
+    if (stepNumber < currentSection) {
+      // Pasos completados - azul sólido
+      num.classList.add('step--completed');
+    } else if (stepNumber === currentSection) {
+      // Paso actual - azul activo
+      num.classList.add('step--active');
+    }
+    // Los pasos futuros mantienen el estilo por defecto (gris)
+  });
+}
+
 function nextStep() {
-  if (currentStep < 7) {
+  // Permitir navegación hasta el paso 17 (cronograma de actividades)
+  if (currentStep < 17) {
     showStep(currentStep + 1);
   }
 }
@@ -233,6 +256,69 @@ function decrementCounter(id) {
  }
 }
 
+// Funciones para el cronograma de actividades
+function addActivity() {
+  const tbody = document.getElementById('schedule-tbody');
+  const activityCount = tbody.children.length + 1;
+  
+  const newRow = document.createElement('tr');
+  newRow.className = 'activity-row';
+  newRow.innerHTML = `
+    <td>
+      <input type="text" class="schedule-input" placeholder="Actividad ${activityCount}" value="">
+    </td>
+    <td>
+      <input type="text" class="schedule-input" placeholder="Descripción de la actividad" value="">
+    </td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td><input type="checkbox" class="period-checkbox"></td>
+    <td>
+      <button type="button" class="btn-remove-activity" onclick="removeActivity(this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4L4 12M4 4L12 12" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </td>
+  `;
+  
+  tbody.appendChild(newRow);
+  showNotification('Actividad agregada exitosamente', 'success');
+}
+
+function removeActivity(button) {
+  const row = button.closest('.activity-row');
+  const tbody = document.getElementById('schedule-tbody');
+  const activityName = row.querySelector('.schedule-input').value || 'esta actividad';
+  
+  // Prevenir eliminar si solo queda una actividad
+  if (tbody.children.length <= 1) {
+    showNotification('Debe mantener al menos una actividad en el cronograma', 'error');
+    return;
+  }
+  
+  if (confirm(`¿Estás seguro de que quieres eliminar ${activityName}?`)) {
+    row.remove();
+    showNotification('Actividad eliminada exitosamente', 'success');
+  }
+}
+
+function submitForm() {
+  // Show loading notification
+  showNotification('Enviando información del proyecto...', 'success');
+  
+  // Simulate form submission delay
+  setTimeout(() => {
+    // Redirect to confirmation page
+    window.location.href = 'confirmacion.html';
+  }, 2000);
+}
+
 // Cierrar modal al hacer clic fuera de él
 window.onclick = function(event) {
  if (event.target.classList.contains('modal')) {
@@ -252,9 +338,65 @@ document.addEventListener('DOMContentLoaded', function() {
   });
  });
  
+ // Agregar event listeners a los números de paso para navegación
+ const stepNumbers = document.querySelectorAll('.step__number');
+ stepNumbers.forEach(stepNumber => {
+  stepNumber.addEventListener('click', function() {
+   const sectionNumber = parseInt(this.getAttribute('data-step'));
+   navigateToSection(sectionNumber);
+  });
+ });
+ 
  // añadir atributo required a los inputs dentro de los modales
  const requiredInputs = document.querySelectorAll('.modal .input');
  requiredInputs.forEach(input => {
   input.setAttribute('required', 'true');
  });
+ 
+ // Inicializar el estado de los pasos
+ showStep(1);
 });
+
+// Función para navegar directamente a una sección haciendo clic en el número
+function navigateToSection(sectionNumber) {
+  // Solo permitir navegación a secciones completadas o la sección actual
+  const currentSection = getCurrentSection();
+  
+  if (sectionNumber <= currentSection) {
+    // Determinar el primer paso de la sección seleccionada
+    let targetStep;
+    switch(sectionNumber) {
+      case 1: targetStep = 1; break;
+      case 2: targetStep = 8; break;
+      case 3: targetStep = 14; break;
+      case 4: targetStep = 15; break;
+      case 5: targetStep = 17; break;
+      default: targetStep = 1;
+    }
+    
+    showStep(targetStep);
+    
+    // Mostrar notificación de navegación
+    const sectionNames = [
+      '', 'Información general', 'Protocolo de investigación', 
+      'Resultados de propuesta', 'Impactos de propuesta', 'Cronograma de actividades'
+    ];
+    
+    if (sectionNumber !== currentSection) {
+      showNotification(`Navegando a: ${sectionNames[sectionNumber]}`, 'success');
+    }
+  } else {
+    // Mostrar mensaje si intenta navegar a una sección futura
+    showNotification('Complete la sección actual para continuar', 'error');
+  }
+}
+
+// Función auxiliar para obtener la sección actual
+function getCurrentSection() {
+  if (currentStep >= 1 && currentStep <= 7) return 1;
+  if (currentStep >= 8 && currentStep <= 13) return 2;
+  if (currentStep >= 14 && currentStep <= 14) return 3;
+  if (currentStep >= 15 && currentStep <= 16) return 4;
+  if (currentStep >= 17 && currentStep <= 17) return 5;
+  return 1;
+}
