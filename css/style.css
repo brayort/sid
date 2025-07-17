@@ -155,9 +155,9 @@ body {
 .step__content::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 3px;
   width: 8px;
-  height: 30px;
+  height: 25px;
   background-color: var(--shadow-color);
   transition: background-color 0.3s ease;
 }
@@ -215,7 +215,7 @@ body {
 
 .step__text {
 
-  color: #333;
+  color: var(--input-shadow-color);
   font-weight: 400;
   transition: all 0.3s ease;
   text-align: center;
@@ -224,14 +224,14 @@ body {
 .step__item:has(.step--active) .step__text,
 .step__item:has(.step--completed) .step__text {
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* Fallback for browsers that don't support :has() */
 .step__item .step__number.step--active ~ .step__text,
 .step__item .step__number.step--completed ~ .step__text {
-  color: black;
-  font-weight: 600;
+  color: #3f3f3f;
+  font-weight: 500;
 }
 
 
@@ -271,7 +271,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background-color: var(--primary-color);
 }
 
@@ -405,7 +405,7 @@ textarea.input {
 /* Headers */
 
 .title {
-  color: #313131;
+color: #313131;
  margin: 20px 0;
  font-size: 30px;
 }
@@ -525,8 +525,8 @@ textarea.input {
 }
 
 .counter-btn {
- width: 32px;
- height: 32px;
+ width: 42px;
+ height: 42px;
  border: 1px solid var(--shadow-color);
  background: white;
  border-radius: 50%;
@@ -534,7 +534,7 @@ textarea.input {
  align-items: center;
  justify-content: center;
  cursor: pointer;
- font-size: 16px;
+ font-size: 20px;
  font-weight: 500;
  color: #666;
 }
