@@ -4,13 +4,13 @@ console.log(cards);
 
 cards.forEach((item) => {
   item.addEventListener('click', () => {
-    // Remove active class from all cards in the same group
+    // Remueve la clase 'card--active' de todas las tarjetas en el grupo
     const cardGroup = item.closest('.card-select');
     if (cardGroup) {
       cardGroup.querySelectorAll('.card').forEach(card => card.classList.remove('card--active'));
     }
-    
-    // Add active class to clicked card
+
+    // Agrega la clase 'card--active' a la tarjeta clicada
     item.classList.add('card--active');
   });
 });
@@ -107,10 +107,10 @@ function removeCollaborator(button) {
  const collaboratorList = collaboratorItem.closest('.collaborator-list');
  const collaboratorName = collaboratorItem.querySelector('.collaborator-name').textContent;
  
- // Count remaining collaborators in this list
+ // Cuenta el número de colaboradores restantes
  const remainingCollaborators = collaboratorList.querySelectorAll('.collaborator-item').length;
  
- // Prevent removing if it's the last collaborator (optional - remove this check if you want to allow empty lists)
+ // Previene eliminar si solo queda un colaborador
  if (remainingCollaborators <= 1) {
   showNotification('Debe mantener al menos un colaborador en cada sección', 'error');
   return;
@@ -168,13 +168,13 @@ function addStudent() {
   grado: grado
  };
  
- // Find the student collaborator list
+ // Encuentra la lista de colaboradores de estudiantes
  const studentSection = document.querySelector('#step-7 .form__group:last-child .collaborator-list');
  const newStudent = createCollaboratorElement(studentData, 'estudiante');
  
  studentSection.appendChild(newStudent);
  
- // Show success message
+ // Muestra mensaje de éxito
  showNotification('Estudiante agregado exitosamente', 'success');
  
  closeModal('modal-estudiante');
@@ -194,13 +194,13 @@ function addProfessor() {
   grado: grado
  };
  
- // Find the professor collaborator list
+ // Encuentra la lista de colaboradores de profesores
  const professorSection = document.querySelector('#step-7 .form__group:first-child .collaborator-list');
  const newProfessor = createCollaboratorElement(professorData, 'profesor');
  
  professorSection.appendChild(newProfessor);
- 
- // Show success message
+
+ // Muestra mensaje de éxito
  showNotification('Profesor agregado exitosamente', 'success');
  
  closeModal('modal-profesor');
@@ -218,7 +218,7 @@ function showNotification(message, type = 'success') {
  }, 3000);
 }
 
-// Counter functionality for deliverables
+// Funciones para incrementar y decrementar contadores
 function incrementCounter(id) {
  const element = document.getElementById(id);
  const currentValue = parseInt(element.textContent);
@@ -233,16 +233,16 @@ function decrementCounter(id) {
  }
 }
 
-// Close modal when clicking outside
+// Cierrar modal al hacer clic fuera de él
 window.onclick = function(event) {
  if (event.target.classList.contains('modal')) {
   event.target.style.display = 'none';
  }
 }
 
-// Initialize form interactions
+// Inicializar el primer paso al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
- // Add event listeners to modal cards
+ // Cargar event listeners para los botones de navegación
  const modalCards = document.querySelectorAll('.modal .card');
  modalCards.forEach(card => {
   card.addEventListener('click', function() {
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
  });
  
- // Add required attribute to form inputs
+ // añadir atributo required a los inputs dentro de los modales
  const requiredInputs = document.querySelectorAll('.modal .input');
  requiredInputs.forEach(input => {
   input.setAttribute('required', 'true');
