@@ -13,7 +13,7 @@
 <div class="grid">
  <header class="header">
   <div class="header__brand">
-   <img src="./images/logo_sip.png" alt="Secretaría de Investigación y Posgrado" width="400px">
+   <img src="./images/logo_sip.png" alt="Secretaría de Investigación y Posgrado" width="300px">
   </div>
  </header>
 
@@ -126,11 +126,11 @@
 
      <div class="form__group">
      <label class="group__label">¿Pertenece al S.N.I.? *</label>
-       <div>
+       <div class="radio__content">
        <input type="radio" class="radio" name="pertenece" value="si" required/>
        <label>Sí</label>
       </div>
-       <div>
+       <div class="radio__content">
        <input type="radio" class="radio" name="pertenece" value="no" checked required/>
        <label>No</label>
       </div>
@@ -185,11 +185,11 @@
 
     <div class="form__group">
      <label class="group__label">Pertenece al perfil PRODEP *</label>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="prodep" id="prodep-si" value="si" checked required/>
       <label for="prodep-si">Sí</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="prodep" id="prodep-no" value="no" required/>
       <label for="prodep-no">No</label>
      </div>
@@ -232,29 +232,21 @@
 
     <div class="form__group">
      <label class="group__label">Tipo de financiamiento *</label>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="financiamiento" id="sin-financiamiento" value="sin-financiamiento" checked required/>
       <label for="sin-financiamiento">Sin financiamiento</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="financiamiento" id="interno" value="interno" required/>
       <label for="interno">Interno</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="financiamiento" id="externo" value="externo" required/>
       <label for="externo">Externo</label>
      </div>
     </div>
 
-    <div class="form__group">
-     <label class="group__label">Institución aportante *</label>
-     <input type="text" class="input" placeholder="Escriba la institución" value="Universidad Autónoma de Nayarit" required minlength="5" maxlength="100">
-    </div>
-
-    <div class="form__group">
-     <label class="group__label">Monto aprobado *</label>
-     <input type="text" class="input" placeholder="$ 0.00 MXN" value="$ 0.00 MXN" required pattern="^\$\s*\d{1,3}(,\d{3})*(\.\d{1,2})?\s*MXN$">
-    </div>
+    <div id="option-html"></div>
 
     <div class="form__actions">
      <button type="button" class="btn btn--secondary" onclick="prevStep()">
@@ -284,27 +276,27 @@
 
     <div class="form__group">
      <label class="group__label">Tipo de fondo *</label>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="propios" value="propios" required/>
       <label for="propios">Propios</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="privado" value="privado" required/>
       <label for="privado">Privado</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="gobierno" value="gobierno" checked required/>
       <label for="gobierno">Gobierno</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="fondos-publicos" value="fondos-publicos" required/>
       <label for="fondos-publicos">Fondos públicos generales universitarios</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="instituciones-privadas" value="instituciones-privadas" required/>
       <label for="instituciones-privadas">Instituciones privadas no lucrativas</label>
      </div>
-     <div>
+     <div class="radio__content">
       <input type="radio" class="radio" name="tipo-fondo" id="exterior" value="exterior" required/>
       <label for="exterior">Exterior</label>
      </div>

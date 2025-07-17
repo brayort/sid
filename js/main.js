@@ -1,17 +1,34 @@
 const cards = document.querySelectorAll('.card');
-
-console.log(cards);
-
 cards.forEach((item) => {
   item.addEventListener('click', () => {
+    // Definir los colores para el fill
+    const activeFillColor = '#007bff'; // O el color que desees para el SVG activo
+    const defaultFillColor = '#656565'; // El color original del SVG
+
     // Remueve la clase 'card--active' de todas las tarjetas en el grupo
+    // Y restaura el color de fill original del SVG para esas tarjetas
     const cardGroup = item.closest('.card-select');
     if (cardGroup) {
-      cardGroup.querySelectorAll('.card').forEach(card => card.classList.remove('card--active'));
+      cardGroup.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('card--active');
+
+        // Restaurar el color de fill del SVG
+        const svgPath = card.querySelector('svg path');
+        if (svgPath) {
+          svgPath.setAttribute('fill', defaultFillColor);
+        }
+      });
     }
 
     // Agrega la clase 'card--active' a la tarjeta clicada
     item.classList.add('card--active');
+
+    // Cambia el color de fill del SVG en la tarjeta clicada
+    const clickedSvgPath = item.querySelector('svg path');
+    if (clickedSvgPath) {
+      clickedSvgPath.setAttribute('fill', activeFillColor);
+    }
+
     
     // Update hidden input value
     updateCardSelection(cardGroup, item);
@@ -912,3 +929,44 @@ function getCurrentSection() {
   if (currentStep >= 17 && currentStep <= 17) return 5;
   return 1;
 }
+
+let radios = document.querySelectorAll('[name="financiamiento"');
+
+let optionHTML = document.querySelector('#option-html');
+
+
+
+radios.forEach((item, index) => {
+
+  item.addEventListener('click', () => {
+    if (index === 0) {
+          optionHTML.innerHTML = `
+          <div class="form__group">
+          <label class="group__label">Unidad acádemica aportante</label>
+          <input type="text" class="input" placeholder="Escriba la unidad acádemica" value="Universidad Autónoma de Nayarit">
+          </div>
+
+          <div class="form__group">
+          <label class="group__label">Monto aprobado</label>
+          <input type="text" class="input" placeholder="$ 0.00 MXN" value="$ 0.00 MXN">
+          </div>
+          `;
+    } else if ( index === 1) {
+
+          optionHTML.innerHTML = `
+          <div class="form__group">
+          <label class="group__label">Institución aportante</label>
+          <input type="text" class="input" placeholder="Escriba la institución" value="Conahcyt">
+          </div>
+
+          <div class="form__group">
+          <label class="group__label">Monto aprobado</label>
+          <input type="text" class="input" placeholder="$ 0.00 MXN" value="$ 0.00 MXN">
+          </div>
+          `;
+    } else {
+      optionHTML.innerHTML = ``;
+    }
+
+  });
+});
