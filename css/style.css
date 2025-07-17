@@ -4,6 +4,7 @@
 :root {
 --primary-color: #003D84;
 --shadow-color: #E9ECEF;
+--input-shadow-color: #AAAAAA;
 }
 
 /* Fin Variables */
@@ -44,15 +45,15 @@ body {}
 
 .header {
  grid-area: header;
- border: 1px solid black;
+ /* border: 1px solid black; */
 }
 .sidebar {
  grid-area: siderbar;
- border: 1px solid black;
+ /* border: 1px solid black; */
 }
 .main {
  grid-area: main;
- border: 1px solid black;
+ /* border: 1px solid black; */
 }
 /* Fin Grid Layout */
 
@@ -63,7 +64,12 @@ body {}
  flex-direction: column;
  justify-content: center;
 }
-
+.header__step {
+ font-size: 18px;
+}
+.header__brand {
+ margin-left: 40px;
+}
 .step__content {
   position: relative;
   display: flex;
@@ -86,7 +92,7 @@ body {}
   content: '';
   position: absolute;
   bottom: 0;
-  width: 10px;
+  width: 8px;
   height: 30px;
   background-color: var(--shadow-color);
 
@@ -114,4 +120,136 @@ body {}
   font-size: 16px;
   color: #333;
   font-weight: 400;
+}
+
+
+/* Card */
+.card-select {
+ display: flex;
+ gap: 12px;
+}
+.card {
+ padding: 20px;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+ justify-content: center;
+ align-items: center;
+ outline: 1px solid  var(--shadow-color);
+}
+
+.card--active {
+ outline: 2px solid #0173CB;
+}
+
+/* Layout */
+.layout {
+ width: 70%;
+ border: 1px solid #CED4DA;
+ padding: 20px;
+}
+
+/* Formularios */
+
+.form {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+}
+
+.form__group {
+ margin: 8px 0;
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+}
+.input, .select {
+ padding: 10px;
+ border: 0;
+ outline: 1px solid var(--input-shadow-color);
+}
+.group__label {
+ font-weight: 500;
+}
+
+.form__actions {
+ margin-top: 10px;
+}
+/* Campo de texto */
+
+.input:focus {
+ outline: 2px solid var(--primary-color);
+}
+/* Radio */
+
+.radio {
+
+  width: 20px;
+  height: 20px;
+  background-color: var(--shadow-color);
+  border-radius: 50%;
+  margin-right: 10px; 
+  position: relative; 
+  cursor: pointer;
+  outline: none; 
+  transition: border-color 0.2s ease-in-out;
+}
+
+.radio::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.2s ease-in-out; 
+}
+
+
+.radio:checked::before {
+  background-color: var(--primary-color); 
+}
+
+.radio:hover {
+  border-color: #0056b3;
+}
+
+/* Botones */
+
+.btn {
+ cursor: pointer;
+ display: flex;
+ justify-content: center;
+ border: 0;
+ width: 100%;
+ display: block;
+ padding: 15px 20px;
+}
+
+.btn--primary {
+ background-color: var(--primary-color);
+ color: #ffff;
+}
+
+.btn--primary:hover {
+ background-color: #0061D2;
+} 
+
+/* Headers */
+
+.title {
+ margin: 20px 0;
+ font-size: 30px;
+}
+
+/* Utilerias */
+
+.has-icon {
+ display: flex;
+ gap: 8px;
+ align-items: center;
 }
